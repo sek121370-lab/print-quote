@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>인쇄소 견적서 시스템</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<header>
+  <div style="display:flex;align-items:center;gap:12px">
+    <h1>🖨️ 인쇄소 견적서 시스템</h1>
+    <span style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:20px;padding:2px 10px;font-size:0.75rem;font-weight:700;letter-spacing:0.5px">v1.0.0</span>
+  </div>
+  <span>Professional Print Quotation</span>
+</header>
+
+<div class="container">
+
+  <!-- ── FORM SECTION ── -->
+  <div id="form-section">
+
+    <div class="grid" style="margin-bottom:24px">
+
+      <!-- 고객 정보 -->
+      <div class="card">
+        <div class="card-header">👤 고객 정보</div>
+        <div class="card-body">
+          <div class="row2">
+            <div class="form-group">
+              <label>회사명 / 고객명 *</label>
+              <input type="text" id="client-name" placeholder="(주)홍길동 / 홍길동" />
+            </div>
+            <div class="form-group">
+              <label>담당자명</label>
+              <input type="text" id="client-contact" placeholder="담당자 성함" />
+            </div>
+          </div>
+          <div class="row2">
+            <div class="form-group">
+              <label>연락처</label>
+              <input type="text" id="client-phone" placeholder="010-0000-0000" />
+            </div>
+            <div class="form-group">
+              <label>이메일</label>
+              <input type="email" id="client-email" placeholder="example@email.com" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>주소</label>
+            <input type="text" id="client-address" placeholder="고객 주소" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 인쇄소 정보 -->
+      <div class="card">
+        <div class="card-header">🏢 인쇄소 정보</div>
+        <div class="card-body">
+          <div class="row2">
+            <div class="form-group">
+              <label>인쇄소명 *</label>
+              <input type="text" id="shop-name" placeholder="○○ 인쇄소" value="소소 인쇄소" />
+            </div>
+            <div class="form-group">
+              <label>사업자번호</label>
+              <input type="text" id="shop-biz" placeholder="000-00-00000" />
+            </div>
+          </div>
+          <div class="row2">
+            <div class="form-group">
+              <label>전화번호</label>
+              <input type="text" id="shop-phone" placeholder="02-0000-0000" />
+            </div>
+            <div class="form-group">
+              <label>팩스</label>
+              <input type="text" id="shop-fax" placeholder="02-0000-0001" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>주소</label>
+            <input type="text" id="shop-address" placeholder="인쇄소 주소" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 견적 기본 정보 -->
+    <div class="card" style="margin-bottom:24px">
+      <div class="card-header">📋 견적 기본 정보</div>
+      <div class="card-body">
+        <div class="row3">
+          <div class="form-group">
+            <label>견적 번호</label>
+            <input type="text" id="quote-no" readonly style="background:#f7fafc" />
+          </div>
+          <div class="form-group">
+            <label>견적 날짜 *</label>
+            <input type="date" id="quote-date" />
+          </div>
+          <div class="form-group">
+            <label>유효 기간</label>
+            <input type="date" id="quote-expiry" />
+          </div>
+        </div>
+        <div class="row2">
+          <div class="form-group">
+            <label>납기 예정일</label>
+            <input type="date" id="delivery-date" />
+          </div>
+          <div class="form-group">
+            <label>결제 조건</label>
+            <select id="payment-term">
+              <option>현금</option>
+              <option>계좌이체</option>
+              <option>30일 후 결제</option>
+              <option>선불 50% / 완료 후 50%</option>
+              <option>완료 후 청구</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 인쇄 항목 -->
+    <div class="card" style="margin-bottom:24px">
+      <div class="card-header">📦 인쇄 항목</div>
+      <div class="card-body">
+        <div class="item-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:36px">No.</th>
+                <th style="min-width:160px">인쇄 품목</th>
+                <th style="min-width:120px">규격 / 사양</th>
+                <th style="min-width:80px">용지</th>
+                <th style="min-width:70px">도수</th>
+                <th style="min-width:80px">수량</th>
+                <th style="min-width:100px">단가 (원)</th>
+                <th style="min-width:110px">금액 (원)</th>
+                <th style="width:60px">삭제</th>
+              </tr>
+            </thead>
+            <tbody id="items-body"></tbody>
+          </table>
+        </div>
+
+        <div class="btn-row" style="margin-top:14px">
+          <button class="btn-outline" onclick="addRow()">＋ 항목 추가</button>
+          <button class="btn-outline" onclick="addRow('명함')">명함</button>
+          <button class="btn-outline" onclick="addRow('전단지')">전단지</button>
+          <button class="btn-outline" onclick="addRow('브로슈어')">브로슈어</button>
+          <button class="btn-outline" onclick="addRow('봉투')">봉투</button>
+          <button class="btn-outline" onclick="addRow('롤업배너')">롤업배너</button>
+          <button class="btn-outline" onclick="addRow('스티커')">스티커</button>
+        </div>
+
+        <div class="summary-box">
+          <div class="summary-row">
+            <span>공급가액 소계</span>
+            <strong id="sum-subtotal">0 원</strong>
+          </div>
+          <div class="summary-row">
+            <span>할인</span>
+            <div class="discount-row">
+              <input type="number" id="discount" value="0" min="0" style="width:90px;text-align:right" oninput="calcTotal()" />
+              <span>원</span>
+            </div>
+          </div>
+          <div class="summary-row">
+            <span>부가세 (VAT 10%)</span>
+            <strong id="sum-vat">0 원</strong>
+          </div>
+          <div class="summary-row total">
+            <span>합계 금액</span>
+            <strong id="sum-total">0 원</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 비고 -->
+    <div class="card" style="margin-bottom:24px">
+      <div class="card-header">📝 비고 및 특이사항</div>
+      <div class="card-body">
+        <div class="form-group">
+          <label>특이사항 / 요청사항</label>
+          <textarea id="notes" rows="4" placeholder="예) 후가공: 코팅(유광/무광), 박, 형압 등&#10;색상 프로파일: CMYK&#10;교정지 필요 여부&#10;기타 고객 요청사항"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row no-print" style="justify-content:center">
+      <button class="btn-primary" onclick="generatePreview()">🔍 견적서 미리보기</button>
+      <button class="btn-success" onclick="printQuote()">🖨️ 인쇄 / PDF 저장</button>
+      <button class="btn-warning" onclick="resetForm()">🔄 초기화</button>
+    </div>
+
+  </div><!-- /form-section -->
+
+  <!-- ── PREVIEW SECTION ── -->
+  <div id="preview-section" style="margin-top:24px">
+    <div class="btn-row no-print" style="margin-bottom:16px;justify-content:center">
+      <button class="btn-outline" onclick="hidePreview()">← 수정하러 돌아가기</button>
+      <button class="btn-success" onclick="printQuote()">🖨️ 인쇄 / PDF 저장</button>
+    </div>
+    <div class="quote-paper" id="quote-paper"></div>
+  </div>
+
+</div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"C:\\\\Users\\\\user\\\\Documents\\\\claude\\\\sosoHome\\\\.claude\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(where node *)",
+      "Bash(where python *)",
+      "Bash(where python3 *)",
+      "Bash(Get-Command python *)",
+      "Bash(Select-Object -ExpandProperty Source)",
+      "PowerShell(\\(Get-Command python\\).Source)",
+      "PowerShell(python -c \"import sys; print\\(sys.version\\)\" 2>&1)",
+      "PowerShell(where.exe node 2>&1; $env:PATH -split ';' | Where-Object { $_ -match 'node|npm' })",
+      "mcp__visualize__read_me",
+      "mcp__visualize__show_widget",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\('PATH','Machine'\\) + ';' + [System.Environment]::GetEnvironmentVariable\\('PATH','User'\\); node --version; npm --version)"
+    ]
+  }
+}
